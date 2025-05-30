@@ -31,12 +31,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "jazzmin",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'app'
 ]
 
 MIDDLEWARE = [
@@ -120,3 +122,62 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+JAZZMIN_SETTINGS = {
+    "site_title": "Investment Admin",
+    "site_header": "Somiti Dashboard",
+    "site_brand": "Somitic Investment",
+    "welcome_sign": "Welcome to the Investment Admin Panel",
+    "site_logo": "yourapp/logo.png",  # Add a logo (place in your static folder)
+    "copyright": "Ejazah",
+    "show_sidebar": True,
+    "navigation_expanded": True,
+    "hide_apps": [],
+    "hide_models": [],
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.User": "fas fa-user",
+        "auth.Group": "fas fa-users",
+        "app.Investor": "fas fa-user-tie",
+        "app.Project": "fas fa-project-diagram",
+        "app.Investment": "fas fa-coins",
+        "app.InvestmentReport": "fas fa-file-alt",
+    },
+
+    # Custom links in the top navbar
+    "topmenu_links": [
+        {"name": "Dashboard", "url": "/admin/", "permissions": ["auth.view_user"]},
+        {"name": "Investor Reports", "url": "/investor/", "new_window": True},
+        {"model": "auth.User"},
+    ],
+
+    # Custom links in the sidebar
+    "usermenu_links": [
+        {"name": "Support", "url": "mailto:support@ejazah.com", "new_window": True},
+        {"model": "auth.user"},
+    ],
+
+    # Reorder apps and models
+    "order_with_respect_to": [
+        "auth",
+        "app.Investor",
+        "app.Project",
+        "app.Investment",
+        "app.InvestmentReport",
+    ],
+
+    "related_modal_active": True,  # Opens foreign key selectors in modals
+
+    # Use tabs for change forms
+    "changeform_format": "horizontal_tabs",
+    "changeform_format_overrides": {
+        "auth.user": "collapsible",
+        "auth.group": "vertical_tabs",
+    },
+
+    # Custom UI tweaks
+    "custom_css": "css/admin-custom.css",
+    "custom_js": "js/admin-custom.js",
+
+    "show_ui_builder": True,  # Jazzmin UI builder button (optional)
+}
