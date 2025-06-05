@@ -1,0 +1,45 @@
+{% extends 'investor/base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <div class="card shadow p-4">
+    <h2 class="mb-4 text-success">Invest in a Project</h2>
+
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+      {% csrf_token %}
+
+      <div class="mb-3">
+        <label for="investor" class="form-label">Select Investor</label>
+        <select class="form-select" id="investor" name="investor" required>
+          <option value="">-- Choose Investor --</option>
+          {% for investor in investors %}
+          <option value="{{ investor.id }}">{{ investor.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="project" class="form-label">Select Project</label>
+        <select class="form-select" id="project" name="project" required>
+          <option value="">-- Choose Project --</option>
+          {% for project in projects %}
+          <option value="{{ project.id }}">{{ project.title }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="amount" class="form-label">Investment Amount (BDT)</label>
+        <input type="number" class="form-control" id="amount" name="amount" min="100" required>
+      </div>
+
+      <button type="submit" class="btn btn-success">Submit Investment</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
