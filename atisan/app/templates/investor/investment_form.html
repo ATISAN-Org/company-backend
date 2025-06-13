@@ -16,6 +16,7 @@
                 <th>Total Investment</th>
                 <th>Balance</th>
                 <th>Joined</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -27,15 +28,79 @@
                 <td>${{ investor.total_investment }}</td>
                 <td>${{ investor.balance }}</td>
                 <td>{{ investor.created_at|date:"M d, Y" }}</td>
+                <td>
+                    <button class="btn btn-sm btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#investments-{{ investor.id }}">
+                        View Investments
+                    </button>
+                </td>
+            </tr>
+            <tr class="collapse" id="investments-{{ investor.id }}">
+                <td colspan="7">
+                    {% if investor.investments.all %}
+                    <table class="table table-sm table-bordered mt-2">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Project</th>
+                            {% if current_investor and current_investor.id == investor.id %}
+                            <th>Amount</th>
+                            {% endif %}
+                            <th>Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for inv in investor.investments.all %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ inv.project.title }}</td>
+                            {% if current_investor and current_investor.id == investor.id %}
+                            <td>${{ inv.amount }}</td>
+                            {% endif %}
+                            <td>{{ inv.date|date:"M d, Y H:i" }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-muted text-center">No investments found.</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <p class="text-muted mb-0">No investments found.</p>
+                    {% endif %}
+                </td>
             </tr>
             {% empty %}
             <tr>
-                <td colspan="6" class="text-center text-muted">No investors found.</td>
+                <td colspan="7" class="text-center text-muted">No investors found.</td>
             </tr>
             {% endfor %}
             </tbody>
         </table>
     </div>
+</div>
+
+<div class="mt-5">
+    <h3 class="mb-3">Create New Investment</h3>
+    <form method="post" action="{% url 'create-investment' %}">
+        {% csrf_token %}
+        <!-- Hidden field for current investor -->
+        <input type="hidden" name="investor" value="{{ current_investor.id }}">
+        <div class="form-group">
+            <label for="project">Project</label>
+            <select name="project" id="project" class="form-control" required>
+                <option value="">Select Project</option>
+                {% for project in projects %}
+                <option value="{{ project.id }}">{{ project.title }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="amount">Amount</label>
+            <input type="number" name="amount" id="amount" class="form-control" min="1" required>
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Submit Investment</button>
+    </form>
 </div>
 
 {% endblock %}

@@ -1,37 +1,26 @@
-{% extends 'investor/base.html' %}
-{% load widget_tweaks %}
+{% extends "investor/base.html" %}
+
+{% block title %}Login - Somiti{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <h2 class="mb-4 text-center">Login</h2>
-
-        {% if messages %}
-        {% for message in messages %}
-        <div class="alert alert-danger">
-            {{ message }}
+<div class="container" style="max-width: 400px; margin-top: 50px;">
+    <h2 class="mb-4">Login to Somiti</h2>
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-danger">{{ message }}</div>
+    {% endfor %}
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_username">Username</label>
+            <input type="text" name="username" id="id_username" class="form-control" required autofocus />
         </div>
-        {% endfor %}
-        {% endif %}
-
-        <form method="POST" novalidate>
-            {% csrf_token %}
-            <div class="form-group">
-                {{ form.username.label_tag }}
-                {{ form.username|add_class:"form-control" }}
-                {{ form.username.errors }}
-            </div>
-
-            <div class="form-group">
-                {{ form.password.label_tag }}
-                {{ form.password|add_class:"form-control" }}
-                {{ form.password.errors }}
-            </div>
-
-            <div class="form-group text-center">
-                <button type="submit" class="btn btn-primary btn-block">Login</button>
-            </div>
-        </form>
-    </div>
+        <div class="form-group">
+            <label for="id_password">Password</label>
+            <input type="password" name="password" id="id_password" class="form-control" required />
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Login</button>
+    </form>
 </div>
 {% endblock %}

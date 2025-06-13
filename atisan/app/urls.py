@@ -1,12 +1,14 @@
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 from . import views
-from .views import create_investment_view, logout_view, investment_reports_view
 
 urlpatterns = [
-    path('dashboard/', views.dashboard_view, name='dashboard'),
-    path('', views.home_view, name='home'),
-    path('invest/', create_investment_view, name='create-investment'),
-    path('reports/', investment_reports_view, name='investment-reports'),
-    path('login/', views.login, name='login'),
-    path('logout/', logout_view, name='logout'),
-]
+      path('', views.home_view, name='home'),
+      path('project/<int:pk>/', views.project_detail_view, name='project_detail'),
+      path('login/', views.login_view, name='login'),
+      path('dashboard/', views.investor_dashboard, name='dashboard'),
+      path('logout/', views.logout_view, name='logout'),
+      path('invest/create/', views.create_investment, name='create-investment'),
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
