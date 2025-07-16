@@ -21,7 +21,8 @@ SECRET_KEY = 'django-insecure-qee#^o)6ncb1sm7ifg#79($&(se(29cvn(^7j-ru93&9x6a*p!
 # ALLOWED_HOSTS = []
 #
 DEBUG = config('DEBUG', default=False, cast=bool)
-ALLOWED_HOSTS = config('ALLOWED_HOSTS').split(',')
+# ALLOWED_HOSTS = config('ALLOWED_HOSTS').split(',')
+ALLOWED_HOSTS = ['api.atysan.xyz', '54.179.240.90']
 
 # Application definition
 
