@@ -15,14 +15,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-qee#^o)6ncb1sm7ifg#79($&(se(29cvn(^7j-ru93&9x6a*p!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+# DEBUG = False
 
 # ALLOWED_HOSTS = ['somiti.atysan.xyz']
 # ALLOWED_HOSTS = []
 #
-# DEBUG = config('DEBUG', default=False, cast=bool)
-# ALLOWED_HOSTS = config('ALLOWED_HOSTS').split(',')
-ALLOWED_HOSTS = ['api.atysan.xyz', '54.179.240.90']
+DEBUG = config('DEBUG', default=False, cast=bool)
+ALLOWED_HOSTS = config('ALLOWED_HOSTS').split(',')
+# ALLOWED_HOSTS = ['api.atysan.xyz', '54.179.240.90']
 
 # Application definition
 
@@ -84,16 +84,16 @@ WSGI_APPLICATION = 'atisan.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': config('DB_NAME'),
-#         'USER': config('DB_USER'),
-#         'PASSWORD': config('DB_PASSWORD'),
-#         'HOST': config('DB_HOST'),
-#         'PORT': config('DB_PORT'),
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT'),
+    }
+}
 
 
 # DATABASES = {
