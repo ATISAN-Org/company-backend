@@ -103,11 +103,13 @@ def project_detail_view(request, pk):
     # Get all investments for this project
     investments = Investment.objects.filter(project=project).select_related('investor')
 
-    total_raised = investments.aggregate(total=Sum('amount'))['total'] or 0
+    total_raised = project.amount_raised
+    total_investors = investments.values('investor').distinct().count()
 
     context = {
         'project': project,
         'investments': investments,
         'total_raised': total_raised,
+        'total_investors':total_investors
     }
     return render(request, 'investor/project_detail.html', context)
