@@ -15,12 +15,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-qee#^o)6ncb1sm7ifg#79($&(se(29cvn(^7j-ru93&9x6a*p!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
+DEBUG = False
 
 # ALLOWED_HOSTS = ['somiti.atysan.xyz']
 # ALLOWED_HOSTS = []
 #
-DEBUG = config('DEBUG', default=False, cast=bool)
+# DEBUG = config('DEBUG', default=False, cast=bool)
 # ALLOWED_HOSTS = config('ALLOWED_HOSTS').split(',')
 ALLOWED_HOSTS = ['api.atysan.xyz', '54.179.240.90']
 
