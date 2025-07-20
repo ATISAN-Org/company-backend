@@ -1,6 +1,10 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 
+from rest_framework import serializers
+from app.models import Project
+
+
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True)
 
@@ -20,3 +24,15 @@ class RegisterSerializer(serializers.ModelSerializer):
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField(write_only=True)
+
+
+class ProjectSerializer(serializers.ModelSerializer):
+    investors = serializers.StringRelatedField(many=True)  # shows __str__ of Investor
+
+    class Meta:
+        model = Project
+        fields = [
+            'id', 'title', 'description', 'investors', 'location',
+            'amount_required', 'amount_raised', 'start_date', 'end_date',
+            'category', 'status', 'is_active', 'document', 'created_at'
+        ]

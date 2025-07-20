@@ -7,7 +7,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
-from .serializers import RegisterSerializer, LoginSerializer
+from .serializers import RegisterSerializer, LoginSerializer, ProjectSerializer
+from app.models import Project
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -43,3 +44,12 @@ def login_api(request):
             })
         return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+@api_view(['GET'])
+def project_list(request):
+    projects = Project.objects.filter(is_active=True)
+    serializer = ProjectSerializer(projects, many=True)
+    return Response(serializer.data)
